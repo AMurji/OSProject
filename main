@@ -1,0 +1,37 @@
+int main(int argc, char *argv[]){
+
+	if (argc == 4){
+		char *sPtr;
+		int slpTime = strtol(argv[1],&sPtr, 10);
+		int prdThrd = strtol(argv[2],&sPtr, 10);
+		int comThrd = strtol(argv[3],&sPtr, 10);
+		if (prdThrd < 1 || comThrd < 1){
+			printf("There must be some number of threads\n");
+			return 0;
+		}
+		if (slpTime < 1){
+			printf("There must be a length of time");
+			return 0;
+		}
+		int thrdTotal = prdThrd + comThrd; 
+		sem_init(&empty, 0, 0);
+		sem_init(&full, 0, SIZE);
+		int s;
+		pthread_t thread[thrdTotal];
+		for (int i = 0 ; i < prdThrd; i++){
+			s = pthread_create(&thread[i], NULL, producer, NULL);
+}
+		for (int i = prdThrd; i < thrdTotal; i++){
+			s = pthread_create(&thread[i], NULL, consumer, NULL);
+}
+		sleep(slpTime);
+		ext = 1;
+		
+		for(int v = 0; v < thrdTotal; v++){
+			s = pthread_join(thread[v],NULL);
+		}
+		return 0;
+	}
+	else
+		printf("Wrong number of command line entries\n");
+}	
