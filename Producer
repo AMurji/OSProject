@@ -1,0 +1,20 @@
+void *producer(void *param) { //producer thread
+	int item = rand(); //generate value
+	int result = 0;
+	int location = 0;
+	while (ext==0){
+		sleep(rand()%6);
+		pthread_mutex_lock (&mutexLock); //lock buffer
+		result = insert(item, location);
+		pthread_mutex_unlock (&mutexLock); //unlock
+		if (result == -1)
+			sem_wait(&full);
+		else{
+			location = (location+1) % SIZE;
+			sem_post(&empty);
+			item = rand();
+		}
+	}
+	pthread_exit(&item);
+	return NULL;
+}
